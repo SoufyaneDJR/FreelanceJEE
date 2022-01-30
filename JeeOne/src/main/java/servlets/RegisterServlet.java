@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.RegisterBean;
+import bean.UserBean;
 import dao.RegisterDao;
 
 /**
@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
 		String lastname = request.getParameter("lastname");
 		String status = request.getParameter("status");
 		
-		RegisterBean newUser = new RegisterBean(email,firstname,lastname,password,status);
+		UserBean newUser = new UserBean(email,firstname,lastname,password,status);
 		
 		RegisterDao rDao = new RegisterDao();
 		boolean result = false;
@@ -49,8 +49,8 @@ public class RegisterServlet extends HttpServlet {
 		
 		if (result == true) {
 			HttpSession session = request.getSession();
-			session.setAttribute("info", (LoginBean)newUser);
-			response.sendRedirect("loginSuccess.jsp");
+			session.setAttribute("info", newUser);
+			response.sendRedirect("joblist.jsp");
 		} else {
 			response.getWriter().append("Internal DataBase Error , Please try again !");
 		}

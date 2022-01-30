@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ page import="bean.LoginBean" %>
+ <%@ page import="bean.UserBean" %>
 <!DOCTYPE html>
-<% LoginBean log = new LoginBean();
-  log = (LoginBean)session.getAttribute("info") ;%>
+<% String log = (String)session.getAttribute("info") ;%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -14,7 +13,7 @@
 <% if (log != null ) {%>
 
 <h1>you have login Successfully</h1>
-<%= log.getEmail() %>
+<%= log%>
 <%}; %>
 </div>
 </body>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.LoginBean;
+import bean.UserBean;
 import dao.LoginDao;
 
 @WebServlet("/login")
@@ -34,16 +34,17 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		LoginBean loginBean = new LoginBean();
+		UserBean loginBean = new UserBean();
 		loginBean.setEmail(email);
 		loginBean.setPassword(password);
 		
-		try {
-			if (loginDao.validate(loginBean))
+		try { 
+			loginBean = loginDao.validate(loginBean);
+			if (loginBean != null)
 			{	
 				HttpSession session = request.getSession();
 				session.setAttribute("info", loginBean);
-				response.sendRedirect("loginSuccess.jsp");
+				response.sendRedirect("/JeeOne/joblist");
 			}
 			else 
 			{

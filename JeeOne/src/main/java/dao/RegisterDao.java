@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import bean.RegisterBean;
+import bean.UserBean;
 
 public class RegisterDao {
 
@@ -31,7 +31,7 @@ public class RegisterDao {
 		return con;
 	}
 	
-	public boolean checkUniqueEmail(RegisterBean newUser) throws SQLException {
+	public boolean checkUniqueEmail(UserBean newUser) throws SQLException {
 		
 		boolean unique = true;
 		
@@ -55,7 +55,7 @@ public class RegisterDao {
 		return unique;
 	}
 	
-	public boolean insert(RegisterBean newUser) throws SQLException
+	public boolean insert(UserBean newUser) throws SQLException
 	{
 		boolean unique = checkUniqueEmail(newUser);
 		

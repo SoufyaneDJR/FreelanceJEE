@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import bean.LoginBean;
+import bean.UserBean;
 
 public class LoginDao {
 
@@ -31,13 +31,12 @@ public class LoginDao {
 		return con;
 	}
 	
-	public boolean validate(LoginBean loginBean) throws SQLException
+	public UserBean validate(UserBean loginBean) throws SQLException
 	{
-		boolean status = false;
+		UserBean User = null;
 		
 		loadDriver(dbDriver);
 		Connection con = getConnection();
-		
 		String sql = "select * from USERS where email = ? and password = ?";
 		PreparedStatement ps;
 		
@@ -46,14 +45,23 @@ public class LoginDao {
 		ps.setString(1, loginBean.getEmail());
 		ps.setString(2, loginBean.getPassword());
 		ResultSet rs = ps.executeQuery();
-		status = rs.next();
 		
+		while (rs.next()) {
+			User = new UserBean();
+			User.setUser_id(rs.getInt("user_id"));
+			User.setEmail(rs.getString("email"));
+			User.setFirstname(rs.getString("firstname"));
+			User.setLastname(rs.getString("lastname"));
+			User.setPassword(rs.getString("password"));
+			User.setCreationDate(rs.getDate("creationdate"));
+			User.setStatus(rs.getString("status"));
+		}
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return status;
+		return User;
 	}
 }
