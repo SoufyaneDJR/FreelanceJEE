@@ -18,7 +18,7 @@
 				<a href="https://www.xadmin.net" class="navbar-brand"> User
 					Management Application </a>
 			</div>
-
+			
 			<ul class="navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/joblist"
 					class="nav-link">List of Jobs</a></li>
