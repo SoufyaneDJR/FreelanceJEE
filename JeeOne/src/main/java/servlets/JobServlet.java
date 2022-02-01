@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.JobBean;
+import bean.ProposalBean;
 import bean.UserBean;
 import dao.JobDao;
+import dao.ProposalDao;
+import dao.RegisterDao;
 
 @WebServlet("/joblist")
 public class JobServlet extends HttpServlet {
@@ -50,6 +54,9 @@ public class JobServlet extends HttpServlet {
 				case "update":
 					updateJob(request,response);
 					break;
+				case "check" :
+					showProposals(request,response);
+					break;
 				default :
 					listJob(request,response);
 					break;
@@ -67,6 +74,31 @@ public class JobServlet extends HttpServlet {
 			
 		}
 		
+	}
+
+	private void showProposals(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		HttpSession session = request.getSession();
+		UserBean currentUser = (UserBean)session.getAttribute("info");
+		int employer_id = currentUser.getUser_id();
+		
+		JobDao jobdao = new JobDao();
+		
+		ProposalDao proposalDao = new ProposalDao();
+		int job_id = Integer.parseInt(request.getParameter("job_id"));
+		JobBean jobinfo = jobdao.selectJob(job_id, employer_id);
+		List<ProposalBean> proposals = proposalDao.selectAllProposals(job_id);
+		List<UserBean> freelancers = new ArrayList<>();;
+		
+		for (ProposalBean proposal : proposals) {
+			int freelancer_id = proposal.getFreelancer_id();
+			RegisterDao userdao = new RegisterDao();
+			freelancers.add(userdao.returnUserWithId(freelancer_id));
+		}
+		request.setAttribute("proposals", proposals);
+		request.setAttribute("jobinfo", jobinfo);
+		request.setAttribute("freelancers", freelancers);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/proposal-list.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void listJob(HttpServletRequest request, HttpServletResponse response)
@@ -108,7 +140,7 @@ public class JobServlet extends HttpServlet {
 		UserBean currentUser = (UserBean)session.getAttribute("info");
 		String job_title = request.getParameter("headline");
 		String job_description = request.getParameter("jobdescription");
-		int job_category = Integer.parseInt(request.getParameter("category"));
+		String job_category = request.getParameter("category");
 		String[] jobskills = request.getParameterValues("skill_id");
 		String job_skills =""; 
 		for (String skill : jobskills) {
@@ -133,7 +165,7 @@ public class JobServlet extends HttpServlet {
 
 		String job_title = request.getParameter("headline");
 		String job_description = request.getParameter("jobdescription");
-		int job_category = Integer.parseInt(request.getParameter("category"));
+		String job_category = request.getParameter("category");
 		String[] job_skills = request.getParameterValues("skill_id");
 		String job_size = request.getParameter("size");
 		String job_lenght = request.getParameter("lenght");
@@ -154,9 +186,6 @@ public class JobServlet extends HttpServlet {
 		UserBean currentUser = (UserBean)session.getAttribute("info");
 		int job_id = Integer.parseInt(request.getParameter("job_id"));
 		JobDao jobDao = new JobDao();
-		System.out.println("zzzzzzzzzzzzzzzzzzzzzzzz");
-		System.out.println(job_id);
-		System.out.println(currentUser.getUser_id());
 		jobDao.deleteJob(job_id,currentUser.getUser_id());
 		response.sendRedirect("/JeeOne/joblist");
 

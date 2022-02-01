@@ -30,6 +30,72 @@ public class RegisterDao {
 		Connection con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
 		return con;
 	}
+	public UserBean returnUserWithId(int user_id) throws SQLException{
+		
+		UserBean User = null;
+		
+		loadDriver(dbDriver);
+		Connection con = getConnection();
+		String sql = "select * from USERS where user_id= ?";
+		PreparedStatement ps;
+		
+		try {
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, user_id);
+		ResultSet rs = ps.executeQuery();
+		
+		User = new UserBean();
+		while (rs.next()) {
+			User.setUser_id(rs.getInt("user_id"));
+			User.setEmail(rs.getString("email"));
+			User.setFirstname(rs.getString("firstname"));
+			User.setLastname(rs.getString("lastname"));
+			User.setPassword(rs.getString("password"));
+			User.setCreationDate(rs.getDate("creationdate"));
+			User.setStatus(rs.getString("status"));
+		}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return User;
+	}
+	
+
+	public UserBean returnUserWithId(String userEmail) throws SQLException{
+		
+		UserBean User = null;
+		
+		loadDriver(dbDriver);
+		Connection con = getConnection();
+		String sql = "select * from USERS where email = ?";
+		PreparedStatement ps;
+		
+		try {
+		ps = con.prepareStatement(sql);
+		ps.setString(1, userEmail);
+		ResultSet rs = ps.executeQuery();
+		
+		User = new UserBean();
+		while (rs.next()) {
+			User.setUser_id(rs.getInt("user_id"));
+			User.setEmail(rs.getString("email"));
+			User.setFirstname(rs.getString("firstname"));
+			User.setLastname(rs.getString("lastname"));
+			User.setPassword(rs.getString("password"));
+			User.setCreationDate(rs.getDate("creationdate"));
+			User.setStatus(rs.getString("status"));
+		}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return User;
+	}
 	
 	public boolean checkUniqueEmail(UserBean newUser) throws SQLException {
 		
@@ -55,11 +121,11 @@ public class RegisterDao {
 		return unique;
 	}
 	
-	public boolean insert(UserBean newUser) throws SQLException
+	public UserBean insert(UserBean newUser) throws SQLException
 	{
 		boolean unique = checkUniqueEmail(newUser);
 		
-		boolean result = false;
+		UserBean result ;
 		if (unique) {
 			
 			loadDriver(dbDriver);
@@ -78,14 +144,16 @@ public class RegisterDao {
 			ps.setDate(6, newUser.getCreationDate());
 			
 			ps.executeUpdate();
-			result = true;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			//Select user with his USER ID :
+			result = returnUserWithId(newUser.getEmail());
 			return result;
 		} else {
-			return result;
+			return null;
 		}
 		
 	}

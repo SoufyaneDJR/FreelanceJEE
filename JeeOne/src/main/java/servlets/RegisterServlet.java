@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
 		UserBean newUser = new UserBean(email,firstname,lastname,password,status);
 		
 		RegisterDao rDao = new RegisterDao();
-		boolean result = false;
+		UserBean result = null;
 		try {
 			result = rDao.insert(newUser);
 		} catch (SQLException e) {
@@ -47,10 +47,15 @@ public class RegisterServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		if (result == true) {
+		if (result != null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("info", newUser);
-			response.sendRedirect("joblist.jsp");
+			session.setAttribute("info", result);
+			if (newUser.getStatus()=="employer") {
+				response.sendRedirect("/JeeOne/joblist");
+			} else {
+				response.sendRedirect("/JeeOne/fillyourcv?do=new");
+			}
+			
 		} else {
 			response.getWriter().append("Internal DataBase Error , Please try again !");
 		}

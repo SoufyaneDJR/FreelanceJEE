@@ -44,7 +44,14 @@ public class LoginServlet extends HttpServlet {
 			{	
 				HttpSession session = request.getSession();
 				session.setAttribute("info", loginBean);
-				response.sendRedirect("/JeeOne/joblist");
+				System.out.println(loginBean.getStatus());
+				if (loginBean.getStatus().equals("employer")) {
+					response.sendRedirect("/JeeOne/joblist");
+				} else {
+					//profile hada 
+					response.sendRedirect("/JeeOne/recommendations");
+				}
+				
 			}
 			else 
 			{

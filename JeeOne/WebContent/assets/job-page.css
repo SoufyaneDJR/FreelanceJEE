@@ -1,0 +1,88 @@
+body{
+  margin: 0;
+  padding: 0;
+   background: linear-gradient(to right , rgba(244, 179, 36,0.8) , rgba(133, 169, 0,0.5));
+  
+}
+h6{
+	margin-top: -18px;
+	color: rgba(0,0,0,0.5);
+}
+.postInfo{
+	width: 600px;
+	 height: 500px; 
+	margin:100px auto 100px auto;
+	padding:20px;
+	border-radius: 10px;
+	 background: #fff;
+
+
+}
+.postTitle{
+  font-size: 25px;
+  
+  text-transform: uppercase;
+  margin: 20px 125px;  
+}
+.postBudget {
+	font-weight: bold;
+}
+span{
+	color: rgba(0,0,0,0.5);
+	font-size: 10px;
+	margin-left: 5px;
+}
+.postLevel{
+	font-weight: bold;
+}
+.postSkills{
+	font-weight: bold;
+}
+
+input[type=text] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: -100px;
+  width: 96%;
+
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input[type=text]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input[type=text]:placeholder {
+  color: #cccccc;
+}
+..postMore{
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: white;
+    background: linear-gradient(to right , rgba(244, 179, 36,0.8) , rgba(133, 169, 0,0.5));
+    border-radius: 10px;
+    float: right;
+    text-decoration: none;
+    cursor: pointer;
+}
+.postMore:hover{
+      background: linear-gradient(to right , rgba(216, 154, 18,0.8) , rgba(126, 157, 10,0.5));
+    }
+

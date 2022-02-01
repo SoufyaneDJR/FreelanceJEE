@@ -46,8 +46,8 @@ public class LoginDao {
 		ps.setString(2, loginBean.getPassword());
 		ResultSet rs = ps.executeQuery();
 		
+		User = new UserBean();
 		while (rs.next()) {
-			User = new UserBean();
 			User.setUser_id(rs.getInt("user_id"));
 			User.setEmail(rs.getString("email"));
 			User.setFirstname(rs.getString("firstname"));

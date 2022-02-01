@@ -7,7 +7,7 @@ public class JobBean {
 	private int user_id;
 	private String job_title;
 	private String job_description;
-	private int job_category;
+	private String job_category;
 	private String job_skills;
 	private String job_size;
 	private String job_lenght;
@@ -21,7 +21,7 @@ public class JobBean {
 	public JobBean() {
 		super();
 	}
-	public JobBean(int job_id, int user_id, String job_title, String job_description, int job_category,
+	public JobBean(int job_id, int user_id, String job_title, String job_description, String job_category,
 			String job_skills, String job_size, String job_lenght, String job_experience,int job_budget, Timestamp job_date,
 			String job_status) {
 		//Used When selecting a single job offer 
@@ -40,7 +40,7 @@ public class JobBean {
 		this.job_status = job_status;
 	}
 
-	public JobBean(int user_id, String job_title, String job_description, int job_category,
+	public JobBean(int user_id, String job_title, String job_description, String job_category,
 			String job_skills, String job_size, String job_lenght, String job_experience,int job_budget) {
 		// Add new job for a certain *USER_ID*
 		super();
@@ -83,10 +83,10 @@ public class JobBean {
 	public void setJob_description(String job_description) {
 		this.job_description = job_description;
 	}
-	public int getJob_category() {
+	public String getJob_category() {
 		return job_category;
 	}
-	public void setJob_category(int job_category) {
+	public void setJob_category(String job_category) {
 		this.job_category = job_category;
 	}
 	public String getJob_skills() {
